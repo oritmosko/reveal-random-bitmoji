@@ -1,3 +1,6 @@
+body {
+    overscroll-behavior: contain;
+}
 
 div {
     text-align: center;
