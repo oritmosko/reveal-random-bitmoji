@@ -3,7 +3,7 @@ let images = [];
 let imageSources = [];
 let imageSize = 512; // Images are 512 pixels
 
-let mouseDraggedEnough = 200;
+let mouseDraggedEnough = 100;
 let mouseDraggedCount = 0;
 
 let canvas;
@@ -13,14 +13,13 @@ let imageGraphics;
 let scale = 0.7;
 let displayedImageSize;
 
-function preload() {
+function setup() {
+  // Keep image names.
   for (let i = 1; i <= numOfImages; i++) {
-    images.push(loadImage(`assets/${i}.webp`));
     imageSources.push(`assets/${i}.webp`);
   }
-}
 
-function setup() {
+  // Setup canvas over image.
   let scale = 1;
   if (displayWidth <= imageSize) {
     scale = 0.6;
@@ -37,6 +36,8 @@ function setup() {
   canvas.center('horizontal');
 
   renderNewImage();
+
+  // Setup buttons.
   select('#renderNew').mousePressed(renderNewImage);
   select('#revealImage').mousePressed(revealImage);
 }
@@ -52,14 +53,14 @@ function draw() {
 }
 
 function renderNewImage() {
-  // Clear canvas
+  // Clear canvas.
   push();
   background(255);
   strokeWeight(6);
   stroke(200);
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
   pop();
-  // Generate new image
+  // Generate new image.
   document.getElementById("img").src = imageSources[Math.floor(random(numOfImages))];
   select('#revealImage').style('visibility', 'hidden');
   mouseDraggedCount = 0;
