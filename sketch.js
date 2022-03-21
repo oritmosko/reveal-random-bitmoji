@@ -10,6 +10,9 @@ let canvas;
 let chosenImage;
 let imageGraphics;
 
+let scale = 0.7;
+let displayedImageSize;
+
 function preload() {
   for (let i = 1; i <= numOfImages; i++) {
     images.push(loadImage(`assets/${i}.webp`));
@@ -18,9 +21,21 @@ function preload() {
 }
 
 function setup() {
+  scale = displayWidth > imageSize ? 1 : 0.6;
+  displayedImageSize = Math.min(displayWidth, imageSize) * scale;
+  console.log(displayedImageSize);
+  console.log(displayWidth);
+  console.log(imageSize);
+  document.getElementById("img").height = displayedImageSize;
+  document.getElementById("img").width = displayedImageSize;
+
   pixelDensity(1);
-  canvas = createCanvas(imageSize * 1.3, imageSize * 1.2);
-  canvas.position(document.getElementById('img').offsetLeft / 1.7, document.getElementById('img').offsetTop / 1.2 + 10);
+  canvas = createCanvas(displayedImageSize * 1.3, displayedImageSize * 1.2);
+  if (displayWidth > imageSize) {
+    canvas.position(document.getElementById('img').offsetLeft / 1.2, document.getElementById('img').offsetTop / 1.2 + 16);
+  } else {
+    canvas.position(document.getElementById('img').offsetLeft / 1.7, document.getElementById('img').offsetTop / 1.2 + 16);
+  }
 
   renderNewImage();
   select('#renderNew').mousePressed(renderNewImage);
@@ -42,7 +57,7 @@ function renderNewImage() {
   push();
   background(255);
   stroke(200);
-  rect(0, 0, imageSize * 1.299, imageSize * 1.199 ,10);
+  rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
   pop();
   // Generate new image
   document.getElementById("img").src = imageSources[Math.floor(random(numOfImages))];
