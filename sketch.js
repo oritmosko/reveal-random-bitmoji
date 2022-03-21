@@ -21,21 +21,20 @@ function preload() {
 }
 
 function setup() {
-  scale = displayWidth > imageSize ? 1 : 0.6;
+  let scale = 1;
+  if (displayWidth <= imageSize) {
+    scale = 0.6;
+  }
+  let canvasOffsetTop = document.getElementById('img').offsetTop / 1.2;
+
   displayedImageSize = Math.min(displayWidth, imageSize) * scale;
-  console.log(displayedImageSize);
-  console.log(displayWidth);
-  console.log(imageSize);
   document.getElementById("img").height = displayedImageSize;
   document.getElementById("img").width = displayedImageSize;
 
   pixelDensity(1);
   canvas = createCanvas(displayedImageSize * 1.3, displayedImageSize * 1.2);
-  if (displayWidth > imageSize) {
-    canvas.position(document.getElementById('img').offsetLeft / 1.2, document.getElementById('img').offsetTop / 1.2 + 16);
-  } else {
-    canvas.position(document.getElementById('img').offsetLeft / 1.7, document.getElementById('img').offsetTop / 1.2 + 16);
-  }
+  canvas.position(0, canvasOffsetTop);
+  canvas.center('horizontal');
 
   renderNewImage();
   select('#renderNew').mousePressed(renderNewImage);
@@ -56,6 +55,7 @@ function renderNewImage() {
   // Clear canvas
   push();
   background(255);
+  strokeWeight(6);
   stroke(200);
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
   pop();
