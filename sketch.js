@@ -55,15 +55,3 @@ function revealImage() {
   background(20);
   pop();
 }
-
-
-
-// function fillColor(x, y) {
-//   if (x < 0 || x >= smallerSize || y < 0 || y >= smallerSize) {
-//     return;
-//   }
-//   pixelColor = chosenImage.get(x, y);
-//   fill(pixelColor);
-//   noStroke();
-//   rect(x, y, 4, 4);
-// }
