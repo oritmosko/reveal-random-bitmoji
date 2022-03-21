@@ -1,0 +1,10 @@
+
+div {
+    text-align: center;
+}
+
+canvas {
+  text-align: center;
+  z-index: 2;
+  mix-blend-mode: screen;
+}

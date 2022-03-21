@@ -1,100 +1,69 @@
 const numOfImages = 6;
 let images = [];
-let chosenImage;
-// Images are 512 pixels
-let smallerSize = 256;
-let mouseDraggedEnough = 400;
+let imageSources = [];
+let imageSize = 512; // Images are 512 pixels
+
+let mouseDraggedEnough = 200;
 let mouseDraggedCount = 0;
+
+let canvas;
+let chosenImage;
+let imageGraphics;
 
 function preload() {
   for (let i = 1; i <= numOfImages; i++) {
     images.push(loadImage(`assets/${i}.webp`));
+    imageSources.push(`assets/${i}.webp`);
   }
 }
 
 function setup() {
-  const canvas = createCanvas(smallerSize, smallerSize);
-  canvas.center();
+  pixelDensity(1);
+  canvas = createCanvas(imageSize * 1.3, imageSize * 1.2);
+  canvas.position(document.getElementById('img').offsetLeft / 1.7, document.getElementById('img').offsetTop / 1.2 + 10);
 
-  for (img of images) {
-    img.resize(smallerSize, smallerSize);
-  }
   renderNewImage();
-
   select('#renderNew').mousePressed(renderNewImage);
-  select('#imLazy').mousePressed(revealImage);
-  // select('#imLazy').hide();
-
-  background(200);
-  startRandomlyForStupidPeople();
-  frameRate(10000);
+  select('#revealImage').mousePressed(revealImage);
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function draw() {
+  if (mouseIsPressed) {
+    strokeWeight(30);
+    line(pmouseX, pmouseY, mouseX, mouseY);
+    if (mouseDraggedCount++ > mouseDraggedEnough) {
+      select('#revealImage').style('visibility', 'visible');
+    }
+  }
 }
 
 function renderNewImage() {
-  chosenImage = images[Math.floor(random(numOfImages))];
-  select('#imLazy').style('visibility', 'hidden');
+  // Clear canvas
+  push();
+  background(255);
+  stroke(200);
+  rect(0, 0, imageSize * 1.299, imageSize * 1.199 ,10);
+  pop();
+  // Generate new image
+  document.getElementById("img").src = imageSources[Math.floor(random(numOfImages))];
+  select('#revealImage').style('visibility', 'hidden');
   mouseDraggedCount = 0;
-  background(200);
 }
 
 function revealImage() {
-  image(chosenImage, 0, 0, smallerSize, smallerSize);
+  push();
+  background(20);
+  pop();
 }
 
-function startRandomlyForStupidPeople() {
-  console.log("here");
-  let x = Math.floor(random(smallerSize/2, smallerSize));
-  let y = Math.floor(random(smallerSize/2, smallerSize));
-  for (let i = 0; i < 1000; i++) {
-    newX = x + Math.floor(random(-1, 2));
-    if (newX >= 0 && newX < smallerSize) {
-      x = newX;
-    }
-    newY = y + Math.floor(random(-1, 2));
-    if (newY >= 0 && newY < smallerSize) {
-      y = newY;
-    }
-    fillColor(x, y);
-  }
-}
 
-function mouseDragged() {
-  fillSquare(mouseX - 1, mouseY);
-  fillSquare(mouseX, mouseY);
-  fillSquare(mouseX + 1, mouseY);
-  fillSquare(mouseX - 1, mouseY - 1);
-  fillSquare(mouseX, mouseY - 1);
-  fillSquare(mouseX + 1, mouseY - 1);
-  fillSquare(mouseX - 1, mouseY + 1);
-  fillSquare(mouseX, mouseY + 1);
-  fillSquare(mouseX + 1, mouseY + 1);
-  if (mouseDraggedCount++ > mouseDraggedEnough) {
-    select('#imLazy').style('visibility', 'visible');
-  }
-}
 
-function fillSquare(x, y) {
-  fillColor(mouseX - 1, mouseY);
-  fillColor(mouseX, mouseY);
-  fillColor(mouseX + 1, mouseY);
-  fillColor(mouseX - 1, mouseY - 1);
-  fillColor(mouseX, mouseY - 1);
-  fillColor(mouseX + 1, mouseY - 1);
-  fillColor(mouseX - 1, mouseY + 1);
-  fillColor(mouseX, mouseY + 1);
-  fillColor(mouseX + 1, mouseY + 1);
-}
-
-function fillColor(x, y) {
-  if (x < 0 || x >= smallerSize || y < 0 || y >= smallerSize) {
-    return;
-  }
-  pixelColor = chosenImage.get(x, y);
-  fill(pixelColor);
-  noStroke();
-  rect(x, y, 4, 4);
-}
+// function fillColor(x, y) {
+//   if (x < 0 || x >= smallerSize || y < 0 || y >= smallerSize) {
+//     return;
+//   }
+//   pixelColor = chosenImage.get(x, y);
+//   fill(pixelColor);
+//   noStroke();
+//   rect(x, y, 4, 4);
+// }
