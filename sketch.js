@@ -30,7 +30,7 @@ function setup() {
   if (displayWidth <= imageSize || heightLeft <= imageSize) {
     scaleImg = 0.6;
   }
-  let canvasOffsetTop = document.getElementById('img').offsetTop;
+  let canvasOffsetTop = document.getElementById('img').offsetTop - 16;
 
   displayedImageSize = Math.min(Math.min(displayWidth, heightLeft), imageSize) * scaleImg;
   document.getElementById("img").height = displayedImageSize;
@@ -97,8 +97,8 @@ function renderNewImage() {
   push();
   background(255);
   strokeWeight(12);
-  stroke(100);
-  rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
+  stroke(255);
+  rect(0, 0, displayedImageSize * 1.299, displayedImageSize + 20);
   pop();
   // Generate new image.
   nextImageIndex = (nextImageIndex + 1) % numOfImages;
