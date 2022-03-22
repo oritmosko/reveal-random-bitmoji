@@ -102,7 +102,7 @@ function renderNewImage() {
   pop();
   // Generate new image.
   nextImageIndex = nextImageIndex++ % numOfImages;
-  document.getElementById("img").src = imageSources[];
+  document.getElementById("img").src = imageSources[nextImageIndex];
   select('#revealImage').style('visibility', 'hidden');
   mouseDraggedCount = 0;
 }
