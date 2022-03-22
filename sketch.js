@@ -101,7 +101,7 @@ function renderNewImage() {
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
   pop();
   // Generate new image.
-  nextImageIndex = nextImageIndex++ % numOfImages;
+  nextImageIndex = (nextImageIndex + 1) % numOfImages;
   document.getElementById("img").src = imageSources[nextImageIndex];
   select('#revealImage').style('visibility', 'hidden');
   mouseDraggedCount = 0;
