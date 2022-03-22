@@ -1,9 +1,35 @@
 body {
-    overscroll-behavior: contain;
+  overscroll-behavior: none;
+  /* Disable scroll effect when scrathing */
+  touch-action: none;
+
+  /* Set background */
+  background-image: linear-gradient(to right top, #bdc3c7, #96a0a7, #707e89, #4d5d6c, #2c3e50);
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+h1 {
+  color: white;
+  /* font-family: 'Aharoni', sans-serif; */
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
+}
+
+
+button {
+  box-sizing: border-box;
+  border-width: 2px;
+  border-radius: 25px;
+  border-style: outset;
+  border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  /* font-family: 'Aharoni', sans-serif; */
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 div {
-    text-align: center;
+  text-align: center;
 }
 
 canvas {
