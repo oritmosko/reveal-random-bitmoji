@@ -1,6 +1,6 @@
 const numOfImages = 6;
-let images = [];
 let imageSources = [];
+let nextImageIndex = 0;
 let imageSize = 512; // Images are 512 pixels
 
 let mouseDraggedEnough = 100;
@@ -21,6 +21,8 @@ function setup() {
   for (let i = 1; i <= numOfImages; i++) {
     imageSources.push(`assets/${i}.webp`);
   }
+  // Randomize elements in images array to avoid displaying the same image twice.
+  imageSources.sort(() => Math.random() - 0.5);
 
   // Setup canvas over image.
   let scaleImg = 1;
@@ -31,8 +33,6 @@ function setup() {
   let canvasOffsetTop = document.getElementById('img').offsetTop / 1.2;
 
   displayedImageSize = Math.min(Math.min(displayWidth, heightLeft), imageSize) * scaleImg;
-  console.log("orittt");
-  console.log(displayedImageSize, displayHeight, scaleImg);
   document.getElementById("img").height = displayedImageSize;
   document.getElementById("img").width = displayedImageSize;
 
@@ -101,7 +101,8 @@ function renderNewImage() {
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize * 1.199 ,10);
   pop();
   // Generate new image.
-  document.getElementById("img").src = imageSources[Math.floor(random(numOfImages))];
+  nextImageIndex = nextImageIndex++ % numOfImages;
+  document.getElementById("img").src = imageSources[];
   select('#revealImage').style('visibility', 'hidden');
   mouseDraggedCount = 0;
 }
