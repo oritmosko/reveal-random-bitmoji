@@ -30,7 +30,7 @@ function setup() {
   if (displayWidth <= imageSize || heightLeft <= imageSize) {
     scaleImg = 0.6;
   }
-  let canvasOffsetTop = document.getElementById('img').offsetTop / 1.2;
+  let canvasOffsetTop = document.getElementById('img').offsetTop;
 
   displayedImageSize = Math.min(Math.min(displayWidth, heightLeft), imageSize) * scaleImg;
   document.getElementById("img").height = displayedImageSize;

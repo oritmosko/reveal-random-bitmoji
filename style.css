@@ -14,7 +14,7 @@ body {
 h1 {
   color: white;
   /* font-family: 'Aharoni', sans-serif; */
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  /* font-family: "Comic Sans MS", "Comic Sans", cursive; */
 }
 
 
@@ -24,8 +24,9 @@ button {
   border-radius: 25px;
   border-style: outset;
   border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+  font-size: large;
   /* font-family: 'Aharoni', sans-serif; */
-  font-family: "Comic Sans MS", "Comic Sans", cursive;
+  /* font-family: "Comic Sans MS", "Comic Sans", cursive; */
 }
 
 div {
