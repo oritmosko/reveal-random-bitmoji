@@ -1,9 +1,9 @@
-const numOfImages = 6;
+const numOfImages = 31;
 let imageSources = [];
 let nextImageIndex = 0;
 let imageSize = 512; // Images are 512 pixels
 
-let mouseDraggedEnough = 100;
+let mouseDraggedEnough = 50;
 let mouseDraggedCount = 0;
 
 let canvas;
@@ -22,7 +22,7 @@ function setup() {
     imageSources.push(`assets/${i}.webp`);
   }
   // Randomize elements in images array to avoid displaying the same image twice.
-  imageSources.sort(() => Math.random() - 0.5);
+  shuffle(imageSources, true);
 
   // Setup canvas over image.
   let scaleImg = 1;
