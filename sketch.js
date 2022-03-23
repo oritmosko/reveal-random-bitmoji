@@ -95,7 +95,7 @@ function renderNewImage() {
   mouseDraggedCount = 0;
 
   // Generate new image.
-  if (nextImageIndex == numOfImages) {
+  if (nextImageIndex == numOfImages - 1) {
     shuffle(imageSources, true);
     nextImageIndex = 0;
   } else {
