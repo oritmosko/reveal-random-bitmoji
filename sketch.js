@@ -10,112 +10,103 @@ let canvas;
 let chosenImage;
 let imageGraphics;
 
+let imgEl;
+let revealImageButton;
+
 let scaleImg;
 let displayedImageSize;
 
 function setup() {
-  // Disable elemnts selection.
-  disableElementsSelection();
+	// Disable elemnts selection.
+	disableElementsSelection();
 
-  // Keep image names.
-  for (let i = 1; i <= numOfImages; i++) {
-    imageSources.push(`assets/${i}.webp`);
-  }
-  // Randomize elements in images array to avoid displaying the same image twice.
-  shuffle(imageSources, true);
+	imgEl = document.getElementById("img");
+	revealImageButton = select('#revealImage');
 
-  // Setup canvas over image.
-  let scaleImg = 1;
-  let heightLeft = displayHeight - document.getElementById("revealImage").offsetTop - document.getElementById("revealImage").offsetHeight;
-  if (displayWidth <= imageSize || heightLeft <= imageSize) {
-    scaleImg = 0.6;
-  }
-  let canvasOffsetTop = document.getElementById('img').offsetTop - 16;
+	// Keep image names.
+	for (let i = 1; i <= numOfImages; i++) {
+		imageSources.push(`assets/${i}.webp`);
+	}
+	// Randomize elements in images array to avoid displaying the same image twice.
+	shuffle(imageSources, true);
 
-  displayedImageSize = Math.min(Math.min(displayWidth, heightLeft), imageSize) * scaleImg;
-  document.getElementById("img").height = displayedImageSize;
-  document.getElementById("img").width = displayedImageSize;
+	// Setup canvas over image.
+	let scaleImg = 1;
+	let heightLeft = displayHeight - document.getElementById("revealImage").offsetTop - document.getElementById("revealImage").offsetHeight;
+	if (displayWidth <= imageSize || heightLeft <= imageSize) {
+		scaleImg = 0.6;
+	}
+	let canvasOffsetTop = document.getElementById('img').offsetTop - 16;
 
-  canvas = createCanvas(displayedImageSize * 1.3, displayedImageSize + 20);
-  canvas.position(0, canvasOffsetTop);
-  canvas.center('horizontal');
+	displayedImageSize = Math.min(Math.min(displayWidth, heightLeft), imageSize) * scaleImg;
+	document.getElementById("img").height = displayedImageSize;
+	document.getElementById("img").width = displayedImageSize;
 
-  renderNewImage();
+	canvas = createCanvas(displayedImageSize * 1.3, displayedImageSize + 20);
+	canvas.position(0, canvasOffsetTop);
+	canvas.center('horizontal');
 
-  // Setup buttons.
-  select('#renderNew').mousePressed(renderNewImage);
-  select('#revealImage').mousePressed(revealImage);
+	renderNewImage();
+
+	// Setup buttons.
+	select('#renderNew').mousePressed(renderNewImage);
+	revealImageButton.mousePressed(revealImage);
 }
 
 function draw() {
-  if (mouseIsPressed) {
-    strokeWeight(30);
-    line(pmouseX, pmouseY, mouseX, mouseY);
-    if (mouseDraggedCount++ > mouseDraggedEnough) {
-      select('#revealImage').style('visibility', 'visible');
-    }
-  }
+	if (mouseIsPressed) {
+		strokeWeight(30);
+		line(pmouseX, pmouseY, mouseX, mouseY);
+		if (mouseDraggedCount++ > mouseDraggedEnough) {
+			revealImageButton.style('visibility', 'visible');
+		}
+	}
 }
 
 function disableElementsSelection() {
-  let unFocus = function () {
-    if (document.selection) {
-        document.selection.empty()
-    } else {
-        window.getSelection().removeAllRanges()
-    }
-  }
-  document.getElementById('revealImage').onmousemove = function () {
-      unFocus()
-  }
-  document.getElementById('revealImage').onmouseup = function () {
-      unFocus()
-  }
-  document.getElementById('renderNew').onmousemove = function () {
-      unFocus()
-  }
-  document.getElementById('renderNew').onmouseup = function () {
-      unFocus()
-  }
-  document.getElementById('header').onmousemove = function () {
-      unFocus()
-  }
-  document.getElementById('header').onmouseup = function () {
-      unFocus()
-  }
-  document.getElementById('imgDiv').onmousemove = function () {
-      unFocus()
-  }
-  document.getElementById('imgDiv').onmouseup = function () {
-      unFocus()
-  }
+	disableElementSelection('revealImage');
+	disableElementSelection('renderNew');
+	disableElementSelection('header');
+	disableElementSelection('imgDiv');
+}
+
+function disableElementSelection(el) {
+	let unFocus = () => {
+		if (document.selection) {
+			document.selection.empty()
+		} else {
+			window.getSelection().removeAllRanges()
+		}
+	}
+	document.getElementById(el).onmousemove = function () {
+		unFocus()
+	}
+	document.getElementById(el).onmouseup = function () {
+		unFocus()
+	}
 }
 
 function renderNewImage() {
-  mouseDraggedCount = 0;
+	mouseDraggedCount = 0;
 
-  // Generate new image.
-  if (nextImageIndex == numOfImages - 1) {
-    shuffle(imageSources, true);
-    nextImageIndex = 0;
-  } else {
-    nextImageIndex++;
-  }
+	// Generate new image.
+	if (nextImageIndex == numOfImages) {
+		shuffle(imageSources);
+		nextImageIndex = 0;
+	} else {
+		nextImageIndex++;
+	}
 
-  // Clear canvas.
-  push();
-  background(255);
-  strokeWeight(12);
-  stroke(255);
-  rect(0, 0, displayedImageSize * 1.299, displayedImageSize + 20);
-
-  document.getElementById("img").src = imageSources[nextImageIndex];
-  select('#revealImage').style('visibility', 'hidden');
-  pop();
+	// Clear canvas.
+	push();
+	background(255);
+	imgEl.src = imageSources[nextImageIndex];
+	revealImageButton.style('visibility', 'hidden');
+	pop();
 }
 
 function revealImage() {
-  push();
-  background(20);
-  pop();
+	push();
+	background(20);
+	pop();
 }
