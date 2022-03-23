@@ -93,6 +93,18 @@ function disableElementsSelection() {
 }
 
 function renderNewImage() {
+  mouseDraggedCount = 0;
+
+  // Generate new image.
+  if (nextImageIndex == numOfImages) {
+    shuffle(imageSources);
+    nextImageIndex = 0;
+  } else {
+    nextImageIndex++;
+  }
+  document.getElementById("img").src = imageSources[nextImageIndex];
+  select('#revealImage').style('visibility', 'hidden');
+
   // Clear canvas.
   push();
   background(255);
@@ -100,11 +112,6 @@ function renderNewImage() {
   stroke(255);
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize + 20);
   pop();
-  // Generate new image.
-  nextImageIndex = (nextImageIndex + 1) % numOfImages;
-  document.getElementById("img").src = imageSources[nextImageIndex];
-  select('#revealImage').style('visibility', 'hidden');
-  mouseDraggedCount = 0;
 }
 
 function revealImage() {
