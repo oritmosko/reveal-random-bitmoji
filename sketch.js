@@ -101,8 +101,6 @@ function renderNewImage() {
   } else {
     nextImageIndex++;
   }
-  document.getElementById("img").src = imageSources[nextImageIndex];
-  select('#revealImage').style('visibility', 'hidden');
 
   // Clear canvas.
   push();
@@ -110,6 +108,9 @@ function renderNewImage() {
   strokeWeight(12);
   stroke(255);
   rect(0, 0, displayedImageSize * 1.299, displayedImageSize + 20);
+
+  document.getElementById("img").src = imageSources[nextImageIndex];
+  select('#revealImage').style('visibility', 'hidden');
   pop();
 }
 
