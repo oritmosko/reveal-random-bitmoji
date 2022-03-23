@@ -36,7 +36,6 @@ function setup() {
   document.getElementById("img").height = displayedImageSize;
   document.getElementById("img").width = displayedImageSize;
 
-  pixelDensity(1);
   canvas = createCanvas(displayedImageSize * 1.3, displayedImageSize + 20);
   canvas.position(0, canvasOffsetTop);
   canvas.center('horizontal');
