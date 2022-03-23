@@ -96,7 +96,7 @@ function renderNewImage() {
 
   // Generate new image.
   if (nextImageIndex == numOfImages) {
-    shuffle(imageSources);
+    shuffle(imageSources, true);
     nextImageIndex = 0;
   } else {
     nextImageIndex++;
