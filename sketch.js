@@ -1,4 +1,4 @@
-const numOfImages = 31;
+const numOfImages = 32;
 let imageSources = [];
 let nextImageIndex = 0;
 let imageSize = 512; // Images are 512 pixels
